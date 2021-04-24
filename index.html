@@ -34,36 +34,39 @@
 				<div class="content" id="simpson"></div>
 			</div>
 		</section>
-
+		
+		
 		<!-- We need to load axios first! -->
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"
 			integrity="sha256-S1J4GVHHDMiirir9qsXWc8ZWw74PHHafpsHp5PXtjTs="
 			crossorigin="anonymous"
 		></script>
-        <script>
-        
-		function fetchSimpsonJSON() {
-            const simpsonArray = [];
-            const url = `https://simpsons-quotes-api.herokuapp.com/quotes/`;
-            axios.get(url)
-              .then(function(response) {
-                return response.data; 
-              })
-              .then(function(simpson) {
-                console.log('data decoded from JSON:', simpson);
-                const simpsonHtml = `
-                            <p>${simpson.quote}
-                            ${simpson.character}
-                            ${simpson.characterDirection}
-                            </p>
-                  <img src="${simpson.image}"/>`;
 
-                document.querySelector('#simpson').innerHTML = simpsonHtml;
-              });
-          }
-          
-          fetchSimpsonJSON();
+		<script>
+		
+		function fetchSimpsonJSON() {
+    		const url = `https://simpsons-quotes-api.herokuapp.com/quotes`;
+
+    		axios.get(url)
+      		.then(function (response) {
+        	return response.data[0];
+      		})
+
+      		.then(function (simpson) {
+        	console.log("data decoded from JSON:", simpson);
+
+			const simpsonHtml = `
+        		<h3>${simpson.character}</h3>
+        		<img src="${simpson.image}" />
+        		<p>${simpson.quote}</p>
+      		`;
+
+        	document.querySelector("#simpson").innerHTML = simpsonHtml;
+     		 });
+ 		 }
+
+  		fetchSimpsonJSON();
         </script>
 	</body>
 </html>
